@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap/bootstrap.css') }}">
+</head>
+<body>
+    <div class="container">
+        <!-- topbar -->
+        <div class="topbar d-flex align-items-center justify-content-between border-bottom border-3 border-dark">
+            <h1>CodingDojo Wall</h1>
+            <div class="box d-flex align-items-end justify-content-center">
+                <p class="mx-5">Welcome, {{ user.first_name }}</p>
+                <p><a href="/logout" class="btn btn-danger">Logout</a></p>
+            </div>
+        </div>
+        <!-- main content -->
+        <div class="row mt-5">
+            <!-- inbound messages -->
+            <div class="col border-end border-3 border-dark">
+                <h2 class="text-center">{ messages.count } Message(s) for you</h2>
+                <!-- example message -->
+                <div class="row text-bg-dark rounded-3 m-5 p-3">
+                    <div class="col">
+                        <p>Michael said (3 hours ago):</p>
+                        <p>"{ message.content }"</p>
+                    </div>
+                    <div class="col-3 d-flex align-items-center justify-content-center">
+                        <a href="/deletemessage/{message.id}" class="btn btn-danger">🗑</a>
+                    </div>
+                </div>
+            </div>
+            <!-- outbound messaging -->
+            <div class="col">
+                <h2 class="text-center">Send a message</h2>
+                <!-- message form -->
+                <form>
+                    <!-- load all other users into select element -->
+                    <select name="target_user" id="target_user" class="form-select">
+                        <option value="" disabled selected>User to Message</option>
+                        {% for other_user in other_users %}
+                        <option value="{{ other_user.id }}">{{ other_user.first_name }} {{ other_user.last_name }}</option>
+                        {% endfor %}
+                    </select>
+                    <!-- text area -->
+                    <textarea name="message_content" id="message_content" class="form-control" rows="10"></textarea>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

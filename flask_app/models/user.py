@@ -44,7 +44,7 @@ class User:
         return is_valid
 
     @classmethod
-    def check_for_email(cls, data:dict) -> bool:
+    def check_for_email(cls, data:dict) -> object|bool:
         query = "SELECT * FROM users WHERE email = %(email)s;"
         result = connectToMySQL('private-wall').query_db(query, data)
         if result:
@@ -52,7 +52,23 @@ class User:
         return False
 
     @classmethod
+    def find_by_id(cls, data:dict) -> object:
+        query = "SELECT * FROM users WHERE id=%(id)s;"
+        result = connectToMySQL('private-wall').query_db(query, data)
+        return cls(result[0])
+
+    @classmethod
     def register_user(cls, data:dict) -> str:
         query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
         result = connectToMySQL('private-wall').query_db(query, data)
         return result
+
+    @classmethod
+    def get_all_other_users(cls, data:dict) -> list:
+        query = "SELECT * FROM users WHERE id!=%(id)s;"
+        results = connectToMySQL('private-wall').query_db(query, data)
+        users = []
+
+        for user in results:
+            users.append(cls(user))
+        return users

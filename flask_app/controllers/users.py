@@ -10,7 +10,7 @@ BCRYPT = Bcrypt(app)
 @app.route('/')
 def r_landing():
     if 'user_id' in session:
-        redirect('/wall')
+        return redirect('/wall')
     return render_template('landing.html')
 
 
@@ -45,5 +45,4 @@ def f_login():
         return redirect('/')
 
     session['user_id'] = user.id
-    print(session['user_id'])
     return redirect('/')
