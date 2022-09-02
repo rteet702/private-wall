@@ -31,6 +31,9 @@ class User:
         if not EMAIL_REGEX.match(form.get('email')):
             flash('* Email must be valid.')
             is_valid = False
+        if User.check_for_email(form):
+            flash('* Email already registered.')
+            is_valid = False
         if not PASSWORD_REGEX.match(form.get('password')):
             flash('* Password must be at least 8 characters!')
             is_valid = False
@@ -39,6 +42,14 @@ class User:
             is_valid = False
 
         return is_valid
+
+    @classmethod
+    def check_for_email(cls, data:dict) -> bool:
+        query = "SELECT * FROM users WHERE email = %(email)s;"
+        result = connectToMySQL('private-wall').query_db(query, data)
+        if result:
+            return cls(result[0])
+        return False
 
     @classmethod
     def register_user(cls, data:dict) -> str:
