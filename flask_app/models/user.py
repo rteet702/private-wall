@@ -1,5 +1,6 @@
 import re
 from flask import flash
+from flask_app.config.mysqlconnection import connectToMySQL
 
 
 NAME_REGEX = re.compile(r'^[a-zA-Z]{2,}$')
@@ -38,3 +39,9 @@ class User:
             is_valid = False
 
         return is_valid
+
+    @classmethod
+    def register_user(cls, data:dict) -> str:
+        query = "INSERT INTO users (first_name, last_name, email, password) VALUES (%(first_name)s, %(last_name)s, %(email)s, %(password)s);"
+        result = connectToMySQL('private-wall').query_db(query, data)
+        return result
