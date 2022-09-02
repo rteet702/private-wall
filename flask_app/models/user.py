@@ -23,22 +23,22 @@ class User:
         is_valid = True
 
         if not NAME_REGEX.match(form.get('first_name')):
-            flash('* First name must be at least 2 characters long.')
+            flash('* First name must be at least 2 characters long.', 'name')
             is_valid = False
         if not NAME_REGEX.match(form.get('last_name')):
-            flash('* Last name must be at least 2 characters long.')
+            flash('* Last name must be at least 2 characters long.', 'name')
             is_valid = False
         if not EMAIL_REGEX.match(form.get('email')):
-            flash('* Email must be valid.')
+            flash('* Email must be valid.', 'email')
             is_valid = False
         if User.check_for_email(form):
-            flash('* Email already registered.')
+            flash('* Email already registered.', 'email')
             is_valid = False
         if not PASSWORD_REGEX.match(form.get('password')):
-            flash('* Password must be at least 8 characters!')
+            flash('* Password must be at least 8 characters!', 'password')
             is_valid = False
         if form.get('confirm_password') != form.get('password'):
-            flash('* Passwords do not match.')
+            flash('* Passwords do not match.', 'password')
             is_valid = False
 
         return is_valid

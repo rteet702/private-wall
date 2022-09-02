@@ -40,7 +40,7 @@ def f_login():
     }
     user = User.check_for_email(login_data)
     if not user or not BCRYPT.check_password_hash(user.password, request.form['password_login']):
-        flash('* Invalid Email or Password.')
+        flash('* Invalid Email or Password.', 'email-password')
         return redirect('/')
 
     session['user_id'] = user.id

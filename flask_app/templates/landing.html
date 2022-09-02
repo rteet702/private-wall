@@ -17,6 +17,13 @@
 
                 <form action="/register" method="post">
                     <!-- first name -->
+                    {% with warnings = get_flashed_messages(category_filter=["name"]) %}
+                    {% if warnings %}
+                    {% for warning in warnings %}
+                    <p class="text-danger">{{ warning }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     <div class="row my-5">
                         <label for="first_name" class="col-sm-2 col-form-label">First Name</label>
                         <div class="col-sm-10">
@@ -31,6 +38,13 @@
                         </div>
                     </div>
                     <!-- email -->
+                    {% with warnings = get_flashed_messages(category_filter=["email"]) %}
+                    {% if warnings %}
+                    {% for warning in warnings %}
+                    <p class="text-danger">{{ warning }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     <div class="row my-5">
                         <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col-sm-10">
@@ -38,6 +52,13 @@
                         </div>
                     </div>
                     <!-- password -->
+                    {% with warnings = get_flashed_messages(category_filter=["password"]) %}
+                    {% if warnings %}
+                    {% for warning in warnings %}
+                    <p class="text-danger">{{ warning }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     <div class="row my-5">
                         <label for="password" class="col-sm-2 col-form-label">Password</label>
                         <div class="col-sm-10">
@@ -60,6 +81,13 @@
                 <h2 class="text-center">Login</h2>
 
                 <form action="/login" method="post">
+                    {% with warnings = get_flashed_messages(category_filter=["email-password"]) %}
+                    {% if warnings %}
+                    {% for warning in warnings %}
+                    <p class="text-danger">{{ warning }}</p>
+                    {% endfor %}
+                    {% endif %}
+                    {% endwith %}
                     <!-- email -->
                     <div class="row my-5">
                         <label for="email_login" class="col-sm-2 col-form-label">Email</label>
