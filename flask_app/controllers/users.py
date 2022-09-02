@@ -20,7 +20,6 @@ def f_register():
         print('Invalid registration')
         return redirect('/')
 
-    print('Valid registration')
     registration_data = {
         'first_name': request.form['first_name'],
         'last_name': request.form['last_name'],

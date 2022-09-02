@@ -5,7 +5,7 @@ from flask_app.config.mysqlconnection import connectToMySQL
 
 NAME_REGEX = re.compile(r'^[a-zA-Z]{2,}$')
 EMAIL_REGEX = re.compile(r'^[a-zA-Z0-9+_-]+@[a-zA-Z._-]+\.[a-zA-Z]+$')
-PASSWORD_REGEX = re.compile(r'^[a-zA-Z0-9!@#$%^&*()+_-].{8,}$')
+PASSWORD_REGEX = re.compile(r'^[a-zA-Z0-9!@#$%^&*()+_-].{6,}$')
 
 
 class User:
@@ -65,7 +65,7 @@ class User:
 
     @classmethod
     def get_all_other_users(cls, data:dict) -> list:
-        query = "SELECT * FROM users WHERE id!=%(id)s;"
+        query = "SELECT * FROM users WHERE id!=%(id)s ORDER BY users.first_name;"
         results = connectToMySQL('private-wall').query_db(query, data)
         users = []
 

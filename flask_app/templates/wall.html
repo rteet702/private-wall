@@ -10,9 +10,9 @@
 <body>
     <div class="container">
         <!-- topbar -->
-        <div class="topbar d-flex align-items-center justify-content-between border-bottom border-3 border-dark">
-            <h1>CodingDojo Wall</h1>
-            <div class="box d-flex align-items-end justify-content-center">
+        <div class="topbar m-5 d-flex align-items-center justify-content-between border-bottom border-3 border-dark">
+            <h1 class="fs-3">CodingDojo Wall</h1>
+            <div class="box d-flex align-items-center justify-content-center">
                 <p class="mx-5">Welcome, {{ user.first_name }}</p>
                 <p><a href="/logout" class="btn btn-danger">Logout</a></p>
             </div>
@@ -21,23 +21,26 @@
         <div class="row mt-5">
             <!-- inbound messages -->
             <div class="col border-end border-3 border-dark">
-                <h2 class="text-center">{ messages.count } Message(s) for you</h2>
-                <!-- example message -->
+                <h2 class="text-center">{{ count }} Message(s) for you</h2>
+                <!-- for each inbound message, create a div from this template -->
+                {% for message in messages %}
                 <div class="row text-bg-dark rounded-3 m-5 p-3">
                     <div class="col">
-                        <p>Michael said (3 hours ago):</p>
-                        <p>"{ message.content }"</p>
+                        <p>{{ message.author }} said ({{ message.minutes_since_message }} minutes ago):</p>
+                        <p>"{{ message.content }}"</p>
                     </div>
                     <div class="col-3 d-flex align-items-center justify-content-center">
-                        <a href="/deletemessage/{message.id}" class="btn btn-danger">🗑</a>
+                        <a href="/deletemessage/{{message.id}}" class="btn btn-danger">🗑</a>
                     </div>
                 </div>
+                {% endfor %}
+                <!-- end message -->
             </div>
             <!-- outbound messaging -->
-            <div class="col">
-                <h2 class="text-center">Send a message</h2>
+            <div class="col px-5">
+                <h2 class="text-center mb-5">Send a message</h2>
                 <!-- message form -->
-                <form>
+                <form action="/sendmessage" method="post">
                     <!-- load all other users into select element -->
                     <select name="target_user" id="target_user" class="form-select">
                         <option value="" disabled selected>User to Message</option>
@@ -46,7 +49,7 @@
                         {% endfor %}
                     </select>
                     <!-- text area -->
-                    <textarea name="message_content" id="message_content" class="form-control" rows="10"></textarea>
+                    <textarea name="message_content" id="message_content" class="form-control my-3" rows="10"></textarea>
                     <button type="submit" class="btn btn-primary">Send Message</button>
                 </form>
             </div>
